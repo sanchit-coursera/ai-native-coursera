@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coursera — AI-Native Learning</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       TOP NAVIGATION BAR
+       ============================================================ -->
+  <nav class="top-nav">
+    <div class="top-nav__logo">
+      <div class="top-nav__logo-icon">C</div>
+      <span>Coursera</span>
+    </div>
+
+    <div class="top-nav__tabs">
+      <button class="top-nav__tab active" data-tab="ask" data-screen="return-state">ASK</button>
+      <button class="top-nav__tab" data-tab="build" data-screen="build-teaser">BUILD</button>
+      <button class="top-nav__tab" data-tab="grow" data-screen="knowledge-map">GROW</button>
+    </div>
+
+    <div class="top-nav__profile">P</div>
+  </nav>
+
+  <!-- ============================================================
+       SCREEN 0: LANDING (Logged Out) — Split: Hero + Live Demo
+       ============================================================ -->
+  <section id="landing" class="screen landing active">
+    <!-- Left: Hero copy -->
+    <div class="landing__hero">
+      <div class="landing__hero-inner">
+        <div class="landing__badge">Reimagined for the AI era</div>
+        <h1 class="landing__title">
+          Learn anything.<br>
+          <span class="landing__title--accent">With the world's best teachers.</span><br>
+          Guided by AI.
+        </h1>
+        <p class="landing__subtitle">
+          Coursera's 7,000+ courses from Stanford, Yale, Google, and 300+ institutions —
+          now delivered through a personal AI tutor that adapts to you in real time.
+        </p>
+        <div class="landing__cta-row">
+          <button class="landing__cta" id="landing-cta">Start Your Journey — Free</button>
+          <span class="landing__cta-note">No enrollment. No credit card. Just curiosity.</span>
+        </div>
+        <div class="landing__logos">
+          <span class="landing__logo-label">Content from</span>
+          <div class="landing__logo-row">
+            <span class="landing__logo-pill">Stanford</span>
+            <span class="landing__logo-pill">Yale</span>
+            <span class="landing__logo-pill">Google</span>
+            <span class="landing__logo-pill">U. of Michigan</span>
+            <span class="landing__logo-pill">IBM</span>
+            <span class="landing__logo-pill landing__logo-pill--more">+300</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Live auto-playing demo -->
+    <div class="landing__demo">
+      <div class="landing__demo-frame">
+        <!-- Mini nav bar in the demo frame -->
+        <div class="demo-nav">
+          <div class="demo-nav__logo">
+            <div class="demo-nav__logo-icon">C</div>
+            <span>Coursera</span>
+          </div>
+          <div class="demo-nav__tabs">
+            <span class="demo-nav__tab demo-nav__tab--active">ASK</span>
+            <span class="demo-nav__tab">BUILD</span>
+            <span class="demo-nav__tab">GROW</span>
+          </div>
+        </div>
+
+        <!-- Demo chat area — auto-plays -->
+        <div id="demo-chat" class="demo-chat">
+          <!-- Populated by JS auto-play -->
+        </div>
+
+        <!-- Demo context bar -->
+        <div class="demo-context-bar">
+          <span class="demo-context-bar__item">🎯 Data Science Career Transition</span>
+          <span class="demo-context-bar__item">
+            Python Fundamentals
+            <span class="demo-context-bar__track"><span class="demo-context-bar__fill" id="demo-progress-fill"></span></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCREEN 1: WELCOME (Not logged in yet — first interaction)
+       ============================================================ -->
+  <main id="welcome" class="screen welcome">
+    <div class="welcome__content">
+      <div class="welcome__greeting">Your learning companion</div>
+      <h1 class="welcome__title">What do you want to learn?</h1>
+      <p class="welcome__subtitle">
+        No courses to browse. No syllabi to follow.<br>
+        Just tell me what you're curious about.
+      </p>
+
+      <div class="welcome__input-wrapper">
+        <input
+          type="text"
+          class="welcome__input"
+          placeholder="I want to learn about..."
+          autocomplete="off"
+        >
+        <button class="welcome__input-arrow" aria-label="Submit">→</button>
+      </div>
+
+      <div class="welcome__suggestions">
+        <button class="welcome__chip">Transition into data science</button>
+        <button class="welcome__chip">Learn Python from scratch</button>
+        <button class="welcome__chip">Understand how LLMs work</button>
+        <button class="welcome__chip">Prepare for a PM interview</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       SCREEN 2: ONBOARDING DIALOGUE
+       ============================================================ -->
+  <section id="onboarding" class="screen chat-screen">
+    <div id="onboarding-chat" class="chat-container">
+      <!-- Messages rendered dynamically by JS -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCREEN 3: LEARNING SESSION (ASK SPACE) — Split View
+       ============================================================ -->
+  <section id="learning" class="screen" style="flex-direction:column;">
+    <div class="split-view">
+      <div id="learning-chat" class="split-view__chat chat-container">
+        <!-- Messages rendered dynamically by JS -->
+      </div>
+      <div class="split-view__editor">
+        <div class="split-view__editor-header">
+          <span>challenge.py</span>
+          <span style="color: var(--accent-warm);">Your Turn</span>
+        </div>
+        <div class="split-view__editor-body">
+          <textarea class="split-view__editor-textarea" spellcheck="false" placeholder="# Your code will appear here..."></textarea>
+        </div>
+        <div class="split-view__editor-footer">
+          <button class="btn btn--ghost">Show Hint</button>
+          <button class="btn btn--primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCREEN 4: SKILL MAP (GROW SPACE)
+       ============================================================ -->
+  <section id="knowledge-map" class="screen knowledge-map-screen">
+    <div class="knowledge-map-container">
+      <div class="map-header">
+        <div class="map-header__title">Your Skill Map</div>
+        <div class="map-header__subtitle">Every skill you need to become a Data Scientist — and where you are right now</div>
+      </div>
+
+      <canvas id="knowledge-canvas" class="knowledge-map-canvas"></canvas>
+
+      <!-- Tooltip (positioned by JS) -->
+      <div id="node-tooltip" class="node-tooltip">
+        <div class="node-tooltip__name">Node Name</div>
+        <div class="node-tooltip__mastery">
+          <div class="node-tooltip__mastery-bar">
+            <div class="node-tooltip__mastery-fill" style="width: 0%"></div>
+          </div>
+          <span class="node-tooltip__mastery-pct">0%</span>
+        </div>
+        <div class="node-tooltip__source">Source course</div>
+      </div>
+
+      <!-- Legend -->
+      <div class="map-legend">
+        <div class="map-legend__item">
+          <div class="map-legend__dot map-legend__dot--mastered"></div>
+          Mastered
+        </div>
+        <div class="map-legend__item">
+          <div class="map-legend__dot map-legend__dot--learning"></div>
+          In Progress
+        </div>
+        <div class="map-legend__item">
+          <div class="map-legend__dot map-legend__dot--upcoming"></div>
+          Not Started
+        </div>
+      </div>
+
+      <!-- Portfolio teaser -->
+      <div class="portfolio-teaser">
+        <div class="portfolio-teaser__title">Your Portfolio</div>
+        <div class="portfolio-teaser__desc">0 projects yet — complete your first coding challenge to start building your portfolio.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRANSITION: "NEXT DAY" OVERLAY
+       ============================================================ -->
+  <div id="next-day-overlay" class="next-day-overlay hidden">
+    <div class="next-day-overlay__content">
+      <div class="next-day-overlay__label">The next day</div>
+      <div class="next-day-overlay__time">Tuesday, 8:42 AM</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SCREEN 5: RETURN STATE — Clean, conversational home
+       ============================================================ -->
+  <section id="return-state" class="screen welcome">
+    <div class="welcome__content">
+      <!-- Minimal greeting with inline progress -->
+      <div class="return-greeting">
+        Good morning, Priya <span class="return-greeting__streak">🔥 2</span>
+      </div>
+
+      <!-- The hero — same as Day 1, always the center -->
+      <h1 class="welcome__title">What do you want to learn?</h1>
+
+      <div class="welcome__input-wrapper">
+        <input
+          type="text"
+          class="welcome__input return-input"
+          placeholder="Ask anything, or pick up where you left off..."
+          autocomplete="off"
+        >
+        <button class="welcome__input-arrow return-input-arrow" aria-label="Submit">→</button>
+      </div>
+
+      <!-- Suggestions — feel like natural continuations, not a separate section -->
+      <div class="welcome__suggestions">
+        <button class="welcome__chip return-chip" data-action="continue">Continue: Loops & Iteration →</button>
+        <button class="welcome__chip return-chip" data-action="challenge">Review: Boolean indexing</button>
+        <button class="welcome__chip return-chip" data-action="explore">How do for loops work?</button>
+      </div>
+
+      <!-- Recent threads — minimal, just links -->
+      <div class="return-threads-minimal">
+        <button class="return-thread-link" data-action="thread">Transition into Data Science</button>
+        <span class="return-thread-sep">·</span>
+        <button class="return-thread-link" data-action="thread">Python: Variables & Filtering</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BUILD TEASER (Coming Soon)
+       ============================================================ -->
+  <section id="build-teaser" class="screen build-teaser">
+    <div class="build-teaser__icon">🔨</div>
+    <h2 class="build-teaser__title">BUILD Space — Coming Soon</h2>
+    <p class="build-teaser__desc">
+      This is where you'll write code, analyze data, design systems, and build
+      real projects — with your AI tutor right alongside you.
+    </p>
+    <div class="build-teaser__preview">
+      <div class="build-teaser__preview-toolbar">
+        <div class="build-teaser__dot"></div>
+        <div class="build-teaser__dot"></div>
+        <div class="build-teaser__dot"></div>
+      </div>
+      <div class="build-teaser__preview-body">
+        <div class="build-teaser__preview-sidebar">
+          <div class="build-teaser__preview-line" style="width:90%"></div>
+          <div class="build-teaser__preview-line" style="width:70%"></div>
+          <div class="build-teaser__preview-line" style="width:85%"></div>
+          <div class="build-teaser__preview-line" style="width:60%"></div>
+          <div class="build-teaser__preview-line" style="width:75%"></div>
+        </div>
+        <div class="build-teaser__preview-editor">
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+          <div class="build-teaser__preview-line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LEARNING OUTLINE PANEL (toggle from chat)
+       ============================================================ -->
+  <aside id="learning-outline" class="learning-outline">
+    <div class="learning-outline__header">
+      <span class="learning-outline__title">Your Learning Path</span>
+      <button id="outline-close" class="learning-outline__close" aria-label="Close">&times;</button>
+    </div>
+    <div class="learning-outline__body">
+      <div class="learning-outline__goal">
+        <span class="learning-outline__goal-label">Goal</span>
+        <span class="learning-outline__goal-value">Data Science Career Transition</span>
+      </div>
+      <div class="learning-outline__progress-overview">
+        <div class="learning-outline__progress-bar">
+          <div id="outline-progress-fill" class="learning-outline__progress-fill" style="width:15%"></div>
+        </div>
+        <span class="learning-outline__progress-text">~5 months at 8 hrs/week</span>
+      </div>
+      <div class="learning-outline__steps">
+        <div class="learning-outline__step learning-outline__step--done">
+          <div class="learning-outline__step-dot"></div>
+          <div class="learning-outline__step-content">
+            <div class="learning-outline__step-label">Data Intuition</div>
+            <div class="learning-outline__step-meta">✓ From your marketing experience</div>
+          </div>
+        </div>
+        <div class="learning-outline__step learning-outline__step--active">
+          <div class="learning-outline__step-dot"></div>
+          <div class="learning-outline__step-content">
+            <div class="learning-outline__step-label">Python Fundamentals</div>
+            <div class="learning-outline__step-meta">In progress — 4–6 weeks</div>
+            <div class="learning-outline__sub-topics">
+              <div class="learning-outline__sub learning-outline__sub--done">✓ Variables & Types</div>
+              <div class="learning-outline__sub learning-outline__sub--done">✓ Data Filtering</div>
+              <div class="learning-outline__sub learning-outline__sub--active">→ Boolean Indexing</div>
+              <div class="learning-outline__sub">Lists & Dictionaries</div>
+              <div class="learning-outline__sub">Loops & Iteration</div>
+              <div class="learning-outline__sub">Functions</div>
+              <div class="learning-outline__sub">Intro to Pandas</div>
+            </div>
+          </div>
+        </div>
+        <div class="learning-outline__step learning-outline__step--future">
+          <div class="learning-outline__step-dot"></div>
+          <div class="learning-outline__step-content">
+            <div class="learning-outline__step-label">Statistics & Probability</div>
+            <div class="learning-outline__step-meta">3–4 weeks</div>
+          </div>
+        </div>
+        <div class="learning-outline__step learning-outline__step--future">
+          <div class="learning-outline__step-dot"></div>
+          <div class="learning-outline__step-content">
+            <div class="learning-outline__step-label">Data Analysis with Pandas</div>
+            <div class="learning-outline__step-meta">3 weeks</div>
+          </div>
+        </div>
+        <div class="learning-outline__step learning-outline__step--future">
+          <div class="learning-outline__step-dot"></div>
+          <div class="learning-outline__step-content">
+            <div class="learning-outline__step-label">Machine Learning Foundations</div>
+            <div class="learning-outline__step-meta">6 weeks</div>
+          </div>
+        </div>
+        <div class="learning-outline__step learning-outline__step--future">
+          <div class="learning-outline__step-dot"></div>
+          <div class="learning-outline__step-content">
+            <div class="learning-outline__step-label">Portfolio Project</div>
+            <div class="learning-outline__step-meta">Capstone</div>
+          </div>
+        </div>
+      </div>
+      <div class="learning-outline__sources">
+        <div class="learning-outline__sources-title">Sourced from</div>
+        <div class="learning-outline__source">📎 U. of Michigan — Python for Everybody</div>
+        <div class="learning-outline__source">📎 Google Data Analytics Certificate</div>
+        <div class="learning-outline__source">📎 Stanford — Statistical Learning</div>
+        <div class="learning-outline__source">📎 Stanford — ML Specialization</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       ACCOUNT CREATION MODAL
+       ============================================================ -->
+  <div id="signup-modal" class="signup-modal hidden">
+    <div class="signup-modal__backdrop"></div>
+    <div class="signup-modal__card">
+      <div class="signup-modal__icon">🎉</div>
+      <h2 class="signup-modal__title">You just completed your first lesson!</h2>
+      <p class="signup-modal__desc">
+        Save your progress, personalize your path, and keep learning — create a free account in one click.
+      </p>
+      <button id="signup-google" class="signup-modal__btn">
+        <span class="signup-modal__btn-icon">G</span>
+        Continue with Google
+      </button>
+      <p class="signup-modal__terms">No credit card required. Your progress is saved.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PROGRESS CONTEXT BAR (persistent, bottom)
+       Two modes: guest (minimal) vs logged-in (full)
+       ============================================================ -->
+  <footer id="context-bar" class="context-bar hidden" data-mode="guest">
+    <div class="context-bar__item">
+      <span class="context-bar__label">Goal</span>
+      <span class="context-bar__value">Data Science Career Transition</span>
+    </div>
+    <div class="context-bar__item">
+      <span class="context-bar__label">Active</span>
+      <span class="context-bar__value--accent">Python Fundamentals</span>
+      <!-- Progress + streak only shown when logged in -->
+      <div class="context-bar__progress-track context-bar__logged-in-only">
+        <div class="context-bar__progress-fill" style="width: 0%"></div>
+      </div>
+      <span id="progress-pct" class="context-bar__value context-bar__logged-in-only">0%</span>
+    </div>
+    <div class="context-bar__item context-bar__streak context-bar__logged-in-only">
+      <span class="context-bar__streak-fire">🔥</span>
+      <span id="streak-text" class="context-bar__value">1 day streak</span>
+    </div>
+    <!-- Outline toggle button -->
+    <button id="outline-toggle" class="context-bar__outline-toggle" aria-label="View learning path">
+      📋 <span class="context-bar__outline-toggle-label">My Path</span>
+    </button>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="scripts/data.js"></script>
+  <script src="scripts/app.js"></script>
+
+</body>
+</html>

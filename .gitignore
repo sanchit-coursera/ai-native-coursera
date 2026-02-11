@@ -1,0 +1,10 @@
+# Test output
+output/
+playwright-test/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.cursor/
